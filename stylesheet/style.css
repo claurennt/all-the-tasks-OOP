@@ -8,6 +8,10 @@ body {
 h1 {
   font-family: "Merriweather Sans", sans-serif;
 }
+span {
+  font-size: 1.8rem;
+  line-height: 0.7;
+}
 
 /* form  */
 .addTaskInput {
