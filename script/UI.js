@@ -9,10 +9,6 @@ export default class UI {
     this.getTasksFromLocalStorage(ToDoList);
   }
 
-  static renderList(UI) {
-    UI.renderList();
-  }
-
   static saveTasksToLocalStorage(ToDoList) {
     localStorage.setItem("tasks", JSON.stringify(ToDoList.taskList.innerHTML));
   }
