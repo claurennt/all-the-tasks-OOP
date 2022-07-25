@@ -1,33 +1,28 @@
 export default class ToDoList {
-  static listItems = document.querySelectorAll(".taskText");
-  static taskList = document.querySelector(".taskList");
+  constructor() {
+    this.taskList = document.querySelector(".taskList");
+    this.tasks = [];
+    this.init();
+  }
 
-  static tasks = [];
-
-  static init() {
-    console.log(this.listItems);
-    this.attachBlurEventToListItems();
+  init() {
     this.delegateEvents();
   }
+
   //blur events do not bubble up so we need to attach them to each element
-  static attachBlurEventToListItems() {
-    //binds blur event to each list item ,
-    this.listItems.forEach((element) =>
+  attachBlurEventToListItems(taskParagraphs) {
+    taskParagraphs?.forEach((element) =>
       element.addEventListener("blur", this.removeContentEditable)
     );
   }
 
-  static returnAllTasks() {
-    return this.tasks;
-  }
-
-  static addNewTask(value, list) {
+  addNewTask(value, list) {
     this.tasks.push(value);
     this.displayTask(list);
   }
 
   //function that creates a new task element and inserts it into the html
-  static displayTask(list) {
+  displayTask(list) {
     const newAddedTask = this.tasks[this.tasks.length - 1];
     const { text, done, date, id } = newAddedTask;
 
@@ -44,31 +39,33 @@ export default class ToDoList {
     taskTextParagraph.addEventListener("blur", this.removeContentEditable);
   }
 
-  static makeContentEditable(e) {
+  makeContentEditable(e) {
     //retrieves the paragraph element
     const paragraph = e.target.closest("li").querySelector("p");
 
     //adds a class to the list item
     paragraph.parentElement.classList.add("editing");
+
     //makes the paragraph editable
     paragraph.contentEditable = true;
   }
 
-  static removeContentEditable(e) {
-    console.log("here");
+  removeContentEditable(e) {
     e.target.parentElement.classList.remove("editing");
     e.target.contentEditable = false;
   }
-  static toggleChecked(e) {
+
+  toggleChecked(e) {
+    console.log("here");
     e.target.parentElement.classList.toggle("checked");
   }
 
-  static removeTaskFromDom(e) {
+  removeTaskFromDom(e) {
     e.target.parentElement.remove();
   }
 
   //event delegation with listener attached to parent
-  static delegateEvents() {
+  delegateEvents() {
     this.taskList.addEventListener("click", (e) => {
       const targetName = e.target.getAttribute("name");
 
